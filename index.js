@@ -144,15 +144,22 @@ function handleMessage(sender_psid, received_message) {
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
 	let response;
+	console.log(received_postback);
 
 	// Get the payload for the postback
 	let payload = received_postback.payload;
 
-	// Set the response based on the postback payload
-	if (payload === 'yes') {
-		response = { "text": "Thanks!" }
-	} else if (payload === 'no') {
-		response = { "text": "Oops, try sending another image." }
+	if (payload === 'searchVehicle') {
+		response = messageHandler.searchVehicle();
+	} else if (payload === 'scheduleAppointment') {
+		response = messageHandler.scheduleAppointment();
+	} else if (payload === 'findToyota') {
+		response = messageHandler.findToyota();
+	}
+
+
+	if (payload === 'sedan') {
+		response = messageHandler.findTopSedans();
 	}
 
 	callSendAPI(sender_psid, response);
